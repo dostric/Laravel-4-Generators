@@ -17,7 +17,7 @@ class ViewGenerator extends Generator {
     {
         $this->template = $this->file->get($template);
 
-        if ($this->needsScaffolding($template))
+        if ($this->scaffold)
         {
             return $this->getScaffoldedTemplate($name);
         }

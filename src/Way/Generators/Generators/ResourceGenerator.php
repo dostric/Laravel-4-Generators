@@ -15,6 +15,11 @@ class ResourceGenerator {
     protected $file;
 
     /**
+     *
+     */
+    public $scaffold;
+
+    /**
      * Constructor
      *
      * @param $file
@@ -22,6 +27,8 @@ class ResourceGenerator {
     public function __construct(File $file)
     {
         $this->file = $file;
+
+        $this->scaffold = false;
     }
 
     /**

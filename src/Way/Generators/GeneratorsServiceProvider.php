@@ -119,8 +119,10 @@ class GeneratorsServiceProvider extends ServiceProvider {
 	{
 		$this->app['generate.scaffold'] = $this->app->share(function($app)
 		{
-			$generator = new Generators\ResourceGenerator($app['files']);
-			$cache = new Cache($app['files']);
+            $cache = new Cache($app['files']);
+
+            $generator = new Generators\ResourceGenerator($app['files']);
+            $generator->scaffold = true;
 
 			return new Commands\ScaffoldGeneratorCommand($generator, $cache);
 		});

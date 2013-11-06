@@ -32,6 +32,8 @@ class ResourceGeneratorCommand extends Command {
      */
     protected $generator;
 
+
+
     /**
      * File cache.
      *
@@ -42,7 +44,9 @@ class ResourceGeneratorCommand extends Command {
     /**
      * Create a new command instance.
      *
-     * @return void
+     * @param \Way\Generators\Generators\ResourceGenerator $generator
+     * @param \Way\Generators\Cache $cache
+     * @return \Way\Generators\Commands\ResourceGeneratorCommand
      */
     public function __construct(ResourceGenerator $generator, Cache $cache)
     {
@@ -55,6 +59,7 @@ class ResourceGeneratorCommand extends Command {
     /**
      * Execute the console command.
      *
+     * @throws MissingFieldsException
      * @return void
      */
     public function fire()
@@ -82,17 +87,16 @@ class ResourceGeneratorCommand extends Command {
         $this->generateMigration();
         $this->generateSeed();
 
-        if (get_called_class() === 'Way\\Generators\\Commands\\ScaffoldGeneratorCommand')
-        {
-            $this->generateTest();
-        }
-
         $this->generator->updateRoutesFile($this->model);
         $this->info('Updated ' . app_path() . '/routes.php');
 
         // We're all finished, so we
         // can delete the cache.
-        $this->cache->destroyAll();
+        if (! $this->generator->scaffold)
+        {
+            $this->cache->destroyAll();
+        }
+
     }
 
     /**
@@ -167,17 +171,16 @@ class ResourceGeneratorCommand extends Command {
      */
     protected function generateTest()
     {
-        if ( ! file_exists(app_path() . '/tests/controllers'))
-        {
-            mkdir(app_path() . '/tests/controllers');
-        }
+        $path = app_path() . '/tests/controllers';
+
+        $this->generator->folders($path);
 
         $this->call(
             'generate:test',
             array(
                 'name' => Pluralizer::plural(strtolower($this->model)) . 'Test',
                 '--template' => $this->getTestTemplatePath(),
-                '--path' => app_path() . '/tests/controllers'
+                '--path' => $path
             )
         );
     }
@@ -198,19 +201,11 @@ class ResourceGeneratorCommand extends Command {
             array($container)
         );
 
-        // If generating a scaffold, we also need views/layouts/scaffold
-        if (get_called_class() === 'Way\\Generators\\Commands\\ScaffoldGeneratorCommand')
-        {
-            $views[] = 'scaffold';
-            $this->generator->folders($layouts);
-        }
-
         // Let's filter through all of our needed views
         // and create each one.
         foreach($views as $view)
         {
-            $path = $view === 'scaffold' ? $layouts : $container;
-            $this->generateView($view, $path);
+            $this->generateView($view, $container);
         }
     }
 

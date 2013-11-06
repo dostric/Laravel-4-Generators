@@ -17,6 +17,13 @@ abstract class Generator {
     public $path;
 
     /**
+     * Perform scaffolding
+     *
+     * @var bool
+     */
+    public $scaffold;
+
+    /**
      * File system instance
      * @var File
      */
@@ -31,10 +38,13 @@ abstract class Generator {
     /**
      * Constructor
      *
-     * @param $file
+     * @param \Illuminate\Filesystem\Filesystem $file
+     * @param \Way\Generators\Cache $cache
      */
     public function __construct(File $file, Cache $cache)
     {
+        $this->scaffold = false;
+
         $this->file = $file;
         $this->cache = $cache;
     }
@@ -75,22 +85,10 @@ abstract class Generator {
     }
 
     /**
-     * Determines whether the specified template
-     * points to the scaffolds directory
-     *
-     * @param  string $template
-     * @return boolean
-     */
-    protected function needsScaffolding($template)
-    {
-        return str_contains($template, 'scaffold');
-    }
-
-    /**
      * Get compiled template
      *
      * @param  string $template
-     * @param  $name Name of file
+     * @param  string $name Name of file
      * @return string
      */
     abstract protected function getTemplate($template, $name);

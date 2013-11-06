@@ -31,7 +31,8 @@ class ViewGeneratorCommand extends BaseGeneratorCommand {
     /**
      * Create a new command instance.
      *
-     * @return void
+     * @param \Way\Generators\Generators\ViewGenerator $generator
+     * @return \Way\Generators\Commands\ViewGeneratorCommand
      */
     public function __construct(ViewGenerator $generator)
     {

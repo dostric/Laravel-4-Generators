@@ -15,7 +15,7 @@ class ModelGenerator extends Generator {
     {
         $this->template = $this->file->get($template);
 
-        if ($this->needsScaffolding($template))
+        if ($this->scaffold)
         {
             $this->template = $this->getScaffoldedModel($className);
         }
@@ -26,8 +26,7 @@ class ModelGenerator extends Generator {
     /**
      * Get template for a scaffold
      *
-     * @param  string $template Path to template
-     * @param  string $name
+     * @param $className
      * @return string
      */
     protected function getScaffoldedModel($className)

@@ -21,7 +21,7 @@ class ControllerGenerator extends Generator {
             str_ireplace('Controller', '', $className)
         ));
 
-        if ($this->needsScaffolding($template))
+        if ($this->scaffold)
         {
             $this->template = $this->getScaffoldedController($template, $className);
         }

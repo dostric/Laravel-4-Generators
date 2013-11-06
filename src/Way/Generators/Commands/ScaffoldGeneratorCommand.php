@@ -25,6 +25,24 @@ class ScaffoldGeneratorCommand extends ResourceGeneratorCommand {
      */
     protected $description = 'Generate scaffolding for a resource.';
 
+
+    public function fire() {
+
+        parent::fire();
+
+        $this->generateTest();
+
+        $path = app_path().'/views/scaffold';
+
+        $this->generator->folders($path);
+
+        $this->generateView('scaffold', $path);
+
+        $this->cache->destroyAll();
+
+    }
+
+
     /**
      * Get the path to the template for a model.
      *
