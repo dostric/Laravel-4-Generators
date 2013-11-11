@@ -24,7 +24,7 @@ class ViewGeneratorCommand extends BaseGeneratorCommand {
     /**
      * Model generator instance.
      *
-     * @var Way\Generators\Generators\ViewGenerator
+     * @var \Way\Generators\Generators\ViewGenerator
      */
     protected $generator;
 
@@ -39,6 +39,18 @@ class ViewGeneratorCommand extends BaseGeneratorCommand {
         parent::__construct();
 
         $this->generator = $generator;
+    }
+
+    public function fire() {
+
+        if ($this->option('scaffold') == 'true') {
+
+            $this->generator->scaffold = true;
+
+        }
+
+        parent::fire();
+
     }
 
     /**
@@ -61,8 +73,9 @@ class ViewGeneratorCommand extends BaseGeneratorCommand {
     protected function getOptions()
     {
         return array(
-           array('path', null, InputOption::VALUE_OPTIONAL, 'Path to views directory.', app_path() . '/views'),
-           array('template', null, InputOption::VALUE_OPTIONAL, 'Path to template.', __DIR__.'/../Generators/templates/view.txt'),
+            array('path', null, InputOption::VALUE_OPTIONAL, 'Path to views directory.', app_path() . '/views'),
+            array('template', null, InputOption::VALUE_OPTIONAL, 'Path to template.', __DIR__.'/../Generators/templates/view.txt'),
+            array('scaffold', null, InputOption::VALUE_OPTIONAL, 'Perform scaffold operation', 'false')
         );
     }
 

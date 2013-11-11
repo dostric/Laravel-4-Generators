@@ -24,14 +24,15 @@ class MigrationGeneratorCommand extends BaseGeneratorCommand
     /**
      * Model generator instance.
      *
-     * @var Way\Generators\Generators\MigrationGenerator
+     * @var \Way\Generators\Generators\MigrationGenerator
      */
     protected $generator;
 
     /**
      * Create a new command instance.
      *
-     * @return void
+     * @param \Way\Generators\Generators\MigrationGenerator $generator
+     * @return \Way\Generators\Commands\MigrationGeneratorCommand
      */
     public function __construct(MigrationGenerator $generator)
     {

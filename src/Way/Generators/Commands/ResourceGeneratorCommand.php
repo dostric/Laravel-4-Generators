@@ -28,7 +28,7 @@ class ResourceGeneratorCommand extends Command {
     /**
      * Model generator instance.
      *
-     * @var Way\Generators\Generators\ResourceGenerator
+     * @var \Way\Generators\Generators\ResourceGenerator
      */
     protected $generator;
 
@@ -90,8 +90,8 @@ class ResourceGeneratorCommand extends Command {
         $this->generator->updateRoutesFile($this->model);
         $this->info('Updated ' . app_path() . '/routes.php');
 
-        // We're all finished, so we
-        // can delete the cache.
+        // We're all finished, so we can delete the cache.
+        // Leave the cache for the scaffold command.
         if (! $this->generator->scaffold)
         {
             $this->cache->destroyAll();
@@ -124,7 +124,7 @@ class ResourceGeneratorCommand extends Command {
      *
      * @return string
      */
-    protected function getViewTemplatePath($view = 'view')
+    protected function getViewTemplatePath()
     {
         return __DIR__."/../Generators/templates/view.txt";
     }
@@ -141,7 +141,8 @@ class ResourceGeneratorCommand extends Command {
             'generate:model',
             array(
                 'name' => $this->model,
-                '--template' => $this->getModelTemplatePath()
+                '--template' => $this->getModelTemplatePath(),
+                '--scaffold' => $this->generator->scaffold
             )
         );
     }
@@ -159,7 +160,8 @@ class ResourceGeneratorCommand extends Command {
             'generate:controller',
             array(
                 'name' => "{$name}Controller",
-                '--template' => $this->getControllerTemplatePath()
+                '--template' => $this->getControllerTemplatePath(),
+                '--scaffold' => $this->generator->scaffold
             )
         );
     }
@@ -201,8 +203,7 @@ class ResourceGeneratorCommand extends Command {
             array($container)
         );
 
-        // Let's filter through all of our needed views
-        // and create each one.
+        // Let's filter through all of our needed views and create each one.
         foreach($views as $view)
         {
             $this->generateView($view, $container);
@@ -223,7 +224,8 @@ class ResourceGeneratorCommand extends Command {
             array(
                 'name'       => $view,
                 '--path'     => $path,
-                '--template' => $this->getViewTemplatePath($view)
+                '--template' => $this->getViewTemplatePath($view),
+                '--scaffold' => $this->generator->scaffold
             )
         );
     }

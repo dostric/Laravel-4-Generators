@@ -1,10 +1,17 @@
 <?php namespace Way\Generators\Commands;
 
-use Way\Generators\Generators\ViewGenerator;
+
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
+
+/**
+ * Class BaseGeneratorCommand
+ * @package Way\Generators\Commands
+ *
+ * @property $generator
+ */
 class BaseGeneratorCommand extends Command {
 
     /**
@@ -31,10 +38,13 @@ class BaseGeneratorCommand extends Command {
     {
         if ($successful)
         {
-            return $this->info("Created {$path}");
+            $this->info("Created {$path}");
+        }
+            else
+        {
+            $this->error("Could not create {$path}");
         }
 
-        $this->error("Could not create {$path}");
     }
 
     /**

@@ -1,17 +1,22 @@
-<?php
+<?php namespace Way\Generators\Generators;
 
-namespace Way\Generators\Generators;
 
-use Illuminate\Filesystem\Filesystem as File;
 use Illuminate\Support\Pluralizer;
 
+
+/**
+ * Class ControllerGenerator
+ * @package Way\Generators\Generators
+ *
+ * @property $template
+ */
 class ControllerGenerator extends Generator {
 
     /**
      * Fetch the compiled template for a controller
      *
      * @param  string $template Path to template
-     * @param  string $name
+     * @param string $className
      * @return string Compiled template
      */
     protected function getTemplate($template, $className)
@@ -35,7 +40,7 @@ class ControllerGenerator extends Generator {
      * Get template for a scaffold
      *
      * @param  string $template Path to template
-     * @param  string $name
+     * @param $className
      * @return string
      */
     protected function getScaffoldedController($template, $className)

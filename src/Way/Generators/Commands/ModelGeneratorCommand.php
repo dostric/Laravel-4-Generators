@@ -24,21 +24,33 @@ class ModelGeneratorCommand extends BaseGeneratorCommand {
 	/**
 	 * Model generator instance.
 	 *
-	 * @var Way\Generators\Generators\ModelGenerator
+	 * @var \Way\Generators\Generators\ModelGenerator
 	 */
 	protected $generator;
 
-	/**
-	 * Create a new command instance.
-	 *
-	 * @return void
-	 */
+    /**
+     * Create a new command instance.
+     *
+     * @param \Way\Generators\Generators\ModelGenerator $generator
+     * @return \Way\Generators\Commands\ModelGeneratorCommand
+     */
 	public function __construct(ModelGenerator $generator)
 	{
 		parent::__construct();
 
 		$this->generator = $generator;
 	}
+
+    public function fire() {
+
+        if ($this->option('scaffold') == 'true') {
+
+            $this->generator->scaffold = true;
+        }
+
+        parent::fire();
+
+    }
 
 	/**
 	 * Get the path to the file that should be generated.
@@ -71,7 +83,8 @@ class ModelGeneratorCommand extends BaseGeneratorCommand {
 	{
 		return array(
 			array('path', null, InputOption::VALUE_OPTIONAL, 'Path to the models directory.', app_path() . '/models'),
-			array('template', null, InputOption::VALUE_OPTIONAL, 'Path to template.', __DIR__.'/../Generators/templates/model.txt')
+			array('template', null, InputOption::VALUE_OPTIONAL, 'Path to template.', __DIR__.'/../Generators/templates/model.txt'),
+            array('scaffold', null, InputOption::VALUE_OPTIONAL, 'Perform scaffold operation', 'false')
 		);
 	}
 

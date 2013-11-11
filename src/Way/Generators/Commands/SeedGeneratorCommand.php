@@ -24,14 +24,15 @@ class SeedGeneratorCommand extends BaseGeneratorCommand {
     /**
      * Model generator instance.
      *
-     * @var Way\Generators\Generators\SeedGenerator
+     * @var \Way\Generators\Generators\SeedGenerator
      */
     protected $generator;
 
     /**
      * Create a new command instance.
      *
-     * @return void
+     * @param \Way\Generators\Generators\SeedGenerator $generator
+     * @return \Way\Generators\Commands\SeedGeneratorCommand
      */
     public function __construct(SeedGenerator $generator)
     {

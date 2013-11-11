@@ -138,7 +138,7 @@ class GeneratorsServiceProvider extends ServiceProvider {
 		$this->app['generate.resource'] = $this->app->share(function($app)
 		{
 			$cache = new Cache($app['files']);
-			$generator = new Generators\ResourceGenerator($app['files'], $cache);
+			$generator = new Generators\ResourceGenerator($app['files']);
 
 			return new Commands\ResourceGeneratorCommand($generator, $cache);
 		});
