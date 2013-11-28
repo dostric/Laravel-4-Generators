@@ -20,6 +20,15 @@ class ResourceGenerator {
     public $scaffold;
 
     /**
+     * Default view properties
+     *
+     * @var string
+     */
+    public $view_parent = 'layouts.scaffold';
+    public $view_section = 'main';
+    public $route_prefix = '';
+
+    /**
      * Constructor
      *
      * @param $file

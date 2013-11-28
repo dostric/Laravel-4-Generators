@@ -32,8 +32,6 @@ class ResourceGeneratorCommand extends Command {
      */
     protected $generator;
 
-
-
     /**
      * File cache.
      *
@@ -222,10 +220,13 @@ class ResourceGeneratorCommand extends Command {
         $this->call(
             'generate:view',
             array(
-                'name'       => $view,
-                '--path'     => $path,
-                '--template' => $this->getViewTemplatePath($view),
-                '--scaffold' => $this->generator->scaffold
+                'name'          => $view,
+                '--path'        => $path,
+                '--template'    => $this->getViewTemplatePath($view),
+                '--scaffold'    => $this->generator->scaffold,
+                '--view_parent' => $this->generator->view_parent,
+                '--view_section' => $this->generator->view_section,
+                '--route_prefix' => $this->generator->route_prefix
             )
         );
     }
@@ -279,7 +280,9 @@ class ResourceGeneratorCommand extends Command {
     {
         return array(
             array('path', null, InputOption::VALUE_OPTIONAL, 'The path to the migrations folder', app_path() . '/database/migrations'),
-            array('fields', null, InputOption::VALUE_OPTIONAL, 'Table fields', null)
+            array('fields', null, InputOption::VALUE_OPTIONAL, 'Table fields', null),
+            array('view_parent', null, InputOption::VALUE_OPTIONAL, 'Skin to extend', null),
+            array('view_section', null, InputOption::VALUE_OPTIONAL, 'Section name in the view', null),
         );
     }
 

@@ -46,6 +46,7 @@ class ViewGenerator extends Generator {
             $formElements = $this->makeFormElements();
 
             $this->template = str_replace('{{formElements}}', $formElements, $this->template);
+
         }
 
         // Replace template vars in view
@@ -59,6 +60,14 @@ class ViewGenerator extends Generator {
         $this->template = str_replace('{{headings}}', implode(PHP_EOL."\t\t\t\t", $headings), $this->template);
         $this->template = str_replace('{{fields}}', implode(PHP_EOL."\t\t\t\t\t", $fields) . PHP_EOL . $editAndDeleteLinks, $this->template);
 
+        if ($this->scaffold) {
+
+            $this->template = str_replace('{{view_parent}}', $this->view_parent, $this->template);
+            $this->template = str_replace('{{view_section}}', $this->view_section, $this->template);
+            $this->template = str_replace('{{route_prefix}}', $this->route_prefix, $this->template);
+
+        }
+
         return $this->template;
     }
 
@@ -71,6 +80,7 @@ class ViewGenerator extends Generator {
     protected function makeTableRows($model)
     {
         $models = Pluralizer::plural($model); // posts
+        $route_prefix = $this->scaffold ? $this->route_prefix : '';
 
         $fields = $this->cache->getFields();
 
@@ -86,13 +96,16 @@ class ViewGenerator extends Generator {
 
         // Now, we'll add the edit and delete buttons.
         $editAndDelete = <<<EOT
-                    <td>{{ link_to_route('{$models}.edit', 'Edit', array(\${$model}->id), array('class' => 'btn btn-info')) }}</td>
+                    <td>{{ link_to_route('{$route_prefix}{$models}.edit', 'Edit', array(\${$model}->id), array('class' => 'btn btn-info')) }}</td>
                     <td>
-                        {{ Form::open(array('method' => 'DELETE', 'route' => array('{$models}.destroy', \${$model}->id))) }}
+                        {{ Form::open(array('method' => 'DELETE', 'route' => array('{$route_prefix}{$models}.destroy', \${$model}->id))) }}
                             {{ Form::submit('Delete', array('class' => 'btn btn-danger')) }}
                         {{ Form::close() }}
                     </td>
 EOT;
+
+
+
 
         return array($headings, $fields, $editAndDelete);
     }

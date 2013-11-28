@@ -46,7 +46,9 @@ class ViewGeneratorCommand extends BaseGeneratorCommand {
         if ($this->option('scaffold') == 'true') {
 
             $this->generator->scaffold = true;
-
+            $this->generator->view_parent = $this->option('view_parent');
+            $this->generator->view_section = $this->option('view_section');
+            $this->generator->route_prefix = $this->option('route_prefix');
         }
 
         parent::fire();
@@ -75,7 +77,10 @@ class ViewGeneratorCommand extends BaseGeneratorCommand {
         return array(
             array('path', null, InputOption::VALUE_OPTIONAL, 'Path to views directory.', app_path() . '/views'),
             array('template', null, InputOption::VALUE_OPTIONAL, 'Path to template.', __DIR__.'/../Generators/templates/view.txt'),
-            array('scaffold', null, InputOption::VALUE_OPTIONAL, 'Perform scaffold operation', 'false')
+            array('scaffold', null, InputOption::VALUE_OPTIONAL, 'Perform scaffold operation', 'false'),
+            array('view_parent', null, InputOption::VALUE_OPTIONAL, 'Skin to extend', 'layouts.scaffold'),
+            array('view_section', null, InputOption::VALUE_OPTIONAL, 'Section name in the view', 'main'),
+            array('route_prefix', null, InputOption::VALUE_OPTIONAL, 'Route prefix', ''),
         );
     }
 
