@@ -283,6 +283,7 @@ class ResourceGeneratorCommand extends Command {
             array('fields', null, InputOption::VALUE_OPTIONAL, 'Table fields', null),
             array('view_parent', null, InputOption::VALUE_OPTIONAL, 'Skin to extend', null),
             array('view_section', null, InputOption::VALUE_OPTIONAL, 'Section name in the view', null),
+            array('route_prefix', null, InputOption::VALUE_OPTIONAL, 'Route controller prefix', null)
         );
     }
 

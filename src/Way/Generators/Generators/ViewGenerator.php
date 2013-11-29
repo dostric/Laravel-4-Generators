@@ -128,7 +128,7 @@ EOT;
             switch($type)
             {
                 case 'integer':
-                   $element = "{{ Form::input('number', '$name') }}";
+                    $element = "{{ Form::input('number', '$name') }}";
                     break;
 
                 case 'text':
