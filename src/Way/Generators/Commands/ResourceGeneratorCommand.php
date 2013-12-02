@@ -159,7 +159,8 @@ class ResourceGeneratorCommand extends Command {
             array(
                 'name' => "{$name}Controller",
                 '--template' => $this->getControllerTemplatePath(),
-                '--scaffold' => $this->generator->scaffold
+                '--scaffold' => $this->generator->scaffold,
+                '--route_prefix' => $this->option('route_prefix')
             )
         );
     }
@@ -226,7 +227,8 @@ class ResourceGeneratorCommand extends Command {
                 '--scaffold'    => $this->generator->scaffold,
                 '--view_parent' => $this->generator->view_parent,
                 '--view_section' => $this->generator->view_section,
-                '--route_prefix' => $this->generator->route_prefix
+                '--route_prefix' => $this->generator->route_prefix,
+                '--force_delete' => $this->option('force_delete')
             )
         );
     }
@@ -283,7 +285,8 @@ class ResourceGeneratorCommand extends Command {
             array('fields', null, InputOption::VALUE_OPTIONAL, 'Table fields', null),
             array('view_parent', null, InputOption::VALUE_OPTIONAL, 'Skin to extend', null),
             array('view_section', null, InputOption::VALUE_OPTIONAL, 'Section name in the view', null),
-            array('route_prefix', null, InputOption::VALUE_OPTIONAL, 'Route controller prefix', null)
+            array('route_prefix', null, InputOption::VALUE_OPTIONAL, 'Route controller prefix', null),
+            array('force_delete', null, InputOption::VALUE_OPTIONAL, 'Force file overwriting', 'false')
         );
     }
 

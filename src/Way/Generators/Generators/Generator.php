@@ -24,6 +24,11 @@ abstract class Generator {
     public $scaffold;
 
     /**
+     * @var bool;
+     */
+    public $force_delete;
+
+    /**
      * File system instance
      * @var File
      */
@@ -43,10 +48,13 @@ abstract class Generator {
      */
     public function __construct(File $file, Cache $cache)
     {
+
         $this->scaffold = false;
+        $this->force_delete = false;
 
         $this->file = $file;
         $this->cache = $cache;
+
     }
 
     /**
@@ -62,7 +70,7 @@ abstract class Generator {
         $this->path = $this->getPath($path);
         $template = $this->getTemplate($template, $this->name);
 
-        if (! $this->file->exists($this->path))
+        if ($this->force_delete || !$this->file->exists($this->path))
         {
             return $this->file->put($this->path, $template) !== false;
         }
