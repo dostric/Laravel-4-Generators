@@ -12,6 +12,10 @@ use Illuminate\Support\Pluralizer;
  */
 class ControllerGenerator extends Generator {
 
+
+    public $route_prefix = '';
+
+
     /**
      * Fetch the compiled template for a controller
      *
@@ -50,7 +54,9 @@ class ControllerGenerator extends Generator {
         $Models = ucwords($models);             // Posts
         $Model = Pluralizer::singular($Models); // Post
 
-        foreach(array('model', 'models', 'Models', 'Model', 'className') as $var)
+        $route_prefix = $this->route_prefix;
+
+        foreach(array('model', 'models', 'Models', 'Model', 'className', 'route_prefix') as $var)
         {
             $this->template = str_replace('{{'.$var.'}}', $$var, $this->template);
         }

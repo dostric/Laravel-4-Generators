@@ -48,6 +48,8 @@ class ControllerGeneratorCommand extends BaseGeneratorCommand {
             $this->generator->scaffold = true;
         }
 
+        $this->generator->route_prefix = $this->option('route_prefix');
+
         parent::fire();
 
     }
@@ -84,7 +86,8 @@ class ControllerGeneratorCommand extends BaseGeneratorCommand {
         return array(
             array('path', null, InputOption::VALUE_OPTIONAL, 'Path to controllers directory.', app_path() . '/controllers'),
             array('template', null, InputOption::VALUE_OPTIONAL, 'Path to template.', __DIR__.'/../Generators/templates/controller.txt'),
-            array('scaffold', null, InputOption::VALUE_OPTIONAL, 'Perform scaffold operation', 'false')
+            array('scaffold', null, InputOption::VALUE_OPTIONAL, 'Perform scaffold operation', 'false'),
+            array('route_prefix', null, InputOption::VALUE_OPTIONAL, 'Route controller prefix', null),
         );
     }
 
