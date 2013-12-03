@@ -56,8 +56,6 @@ class ViewGeneratorCommand extends BaseGeneratorCommand {
 
         }
 
-        $this->generator->force_delete = $this->option('force_delete') == true ? true : false;
-
         parent::fire();
 
     }
