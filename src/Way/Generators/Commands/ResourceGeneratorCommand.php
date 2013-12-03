@@ -218,6 +218,7 @@ class ResourceGeneratorCommand extends Command {
      */
     protected function generateView($view, $path)
     {
+
         $this->call(
             'generate:view',
             array(
@@ -228,7 +229,8 @@ class ResourceGeneratorCommand extends Command {
                 '--view_parent' => $this->generator->view_parent,
                 '--view_section' => $this->generator->view_section,
                 '--route_prefix' => $this->generator->route_prefix,
-                '--force_delete' => $this->option('force_delete')
+                '--force_delete' => $this->option('force_delete'),
+                '--itemTemplate' => $this->generator->scaffold ? $this->itemTemplate : ''
             )
         );
     }

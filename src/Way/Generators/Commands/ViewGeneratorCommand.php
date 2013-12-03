@@ -45,10 +45,14 @@ class ViewGeneratorCommand extends BaseGeneratorCommand {
 
         if ($this->option('scaffold') == 'true') {
 
+            //not suitable
+            //$this->generator = new \ViewGeneratorBootstrap($this->generator->file, $this->generator->cache);
+
             $this->generator->scaffold = true;
             $this->generator->view_parent = $this->option('view_parent');
             $this->generator->view_section = $this->option('view_section');
             $this->generator->route_prefix = $this->option('route_prefix');
+            $this->generator->itemTemplate = $this->option('itemTemplate');
 
         }
 
@@ -85,6 +89,7 @@ class ViewGeneratorCommand extends BaseGeneratorCommand {
             array('view_section', null, InputOption::VALUE_OPTIONAL, 'Section name in the view', 'main'),
             array('route_prefix', null, InputOption::VALUE_OPTIONAL, 'Route prefix', ''),
             array('force_delete', null, InputOption::VALUE_OPTIONAL, 'Force file overwriting', 'false'),
+            array('itemTemplate', null, InputOption::VALUE_OPTIONAL, 'Defines item template path. Not supposed to used in cmd.', ''),
         );
     }
 
