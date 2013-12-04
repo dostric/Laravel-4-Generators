@@ -280,6 +280,8 @@ class ResourceGeneratorCommand extends Command {
      */
     protected function getOptions()
     {
+
+        //just a comment
         return array(
             array('path', null, InputOption::VALUE_OPTIONAL, 'The path to the migrations folder', app_path() . '/database/migrations'),
             array('fields', null, InputOption::VALUE_OPTIONAL, 'Table fields', null),
