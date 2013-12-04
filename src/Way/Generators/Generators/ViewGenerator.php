@@ -6,6 +6,8 @@ use Illuminate\Support\Pluralizer;
 
 class ViewGenerator extends Generator {
 
+    public $itemTemplate;
+
     /**
      * Fetch the compiled template for a view
      *
@@ -98,7 +100,7 @@ class ViewGenerator extends Generator {
         $editAndDelete = <<<EOT
                     <td>{{ link_to_route('{$route_prefix}{$models}.edit', 'Edit', array(\${$model}->id), array('class' => 'btn btn-info')) }}</td>
                     <td>
-                        {{ Form::open(array('method' => 'DELETE', 'route' => array('{$route_prefix}{$models}.destroy', \${$model}->id))) }}
+                        {{ Form::open(array('method' => 'DELETE', 'route' => array('{$route_prefix}{$models}.destroy', \${$model}->id), 'class'=>'form-horizontal')) }}
                             {{ Form::submit('Delete', array('class' => 'btn btn-danger')) }}
                         {{ Form::close() }}
                     </td>
@@ -120,6 +122,13 @@ EOT;
     {
         $formMethods = array();
 
+        $itemTemplate = $this->itemTemplate ? file_get_contents($this->itemTemplate) :'
+            <li>
+                $label
+                $element
+            </li>
+            ';
+
         foreach($this->cache->getFields() as $name => $type)
         {
             $formalName = ucwords($name);
@@ -128,11 +137,11 @@ EOT;
             switch($type)
             {
                 case 'integer':
-                    $element = "{{ Form::input('number', '$name') }}";
+                    $element = "{{ Form::input('number', '$name', '', array('class' => 'form-control')) }}";
                     break;
 
                 case 'text':
-                    $element = "{{ Form::textarea('$name') }}";
+                    $element = "{{ Form::textarea('$name', '', array('class' => 'form-control')) }}";
                     break;
 
                 case 'boolean':
@@ -140,19 +149,23 @@ EOT;
                     break;
 
                 default:
-                    $element = "{{ Form::text('$name') }}";
+                    $element = "{{ Form::text('$name', '', array('class' => 'form-control')) }}";
                     break;
+            }
+
+            if ($this->itemTemplate) {
+                $label = $formalName;
+            } else {
+                $label = "{{ Form::label('$name', '$formalName:') }}";
             }
 
             // Now that we have the correct $element,
             // We can build up the HTML fragment
-            $frag = <<<EOT
-        <li>
-            {{ Form::label('$name', '$formalName:') }}
-            $element
-        </li>
+            $frag = $itemTemplate;
+            foreach(array('name', 'label', 'element') as $item) {
+                $frag = str_replace("$".$item, $$item, $frag);
+            }
 
-EOT;
 
             $formMethods[] = $frag;
         }

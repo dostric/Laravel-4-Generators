@@ -159,8 +159,7 @@ class ResourceGeneratorCommand extends Command {
             array(
                 'name' => "{$name}Controller",
                 '--template' => $this->getControllerTemplatePath(),
-                '--scaffold' => $this->generator->scaffold,
-                '--route_prefix' => $this->option('route_prefix')
+                '--scaffold' => $this->generator->scaffold
             )
         );
     }
@@ -218,6 +217,7 @@ class ResourceGeneratorCommand extends Command {
      */
     protected function generateView($view, $path)
     {
+
         $this->call(
             'generate:view',
             array(
@@ -228,7 +228,8 @@ class ResourceGeneratorCommand extends Command {
                 '--view_parent' => $this->generator->view_parent,
                 '--view_section' => $this->generator->view_section,
                 '--route_prefix' => $this->generator->route_prefix,
-                '--force_delete' => $this->option('force_delete')
+                '--force_delete' => $this->option('force_delete'),
+                '--itemTemplate' => $this->generator->scaffold ? $this->itemTemplate : ''
             )
         );
     }
@@ -288,7 +289,7 @@ class ResourceGeneratorCommand extends Command {
             array('view_parent', null, InputOption::VALUE_OPTIONAL, 'Skin to extend', null),
             array('view_section', null, InputOption::VALUE_OPTIONAL, 'Section name in the view', null),
             array('route_prefix', null, InputOption::VALUE_OPTIONAL, 'Route controller prefix', null),
-            array('force_delete', null, InputOption::VALUE_OPTIONAL, 'Force file overwriting', 'false')
+            array('force_delete', null, InputOption::VALUE_OPTIONAL, 'Force view file delete', 'true')
         );
     }
 
