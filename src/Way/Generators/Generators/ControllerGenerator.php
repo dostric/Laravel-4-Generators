@@ -28,6 +28,9 @@ class ControllerGenerator extends Generator {
     {
         $this->template = $this->file->get($template);
 
+        $addonsTemplate = $template.'.addon';
+        $addonsDefault = $this->file->exists($addonsTemplate) ? $this->file->get($addonsTemplate) : '';
+
         $resource = strtolower(Pluralizer::plural(
             str_ireplace('Controller', '', $className)
         ));
@@ -49,17 +52,20 @@ class ControllerGenerator extends Generator {
             $template = str_replace('/*ADDONs*/', $addons, $this->template);
 
         } else {
+
             // add the blank addon file
-            $addonsDefault = '<?php
+            if ($addonsDefault) {
 
-             class '.$className.'_addons extends '.$className.' {
+                // create the default addons template
+                $addonsDefault = str_replace('{{className}}', $className, $addonsDefault);
 
-                /* ADDON */
-                /* ADDON */
+                // save it
+                $this->file->put($fileAddons, $addonsDefault);
 
-             }
-            ';
-            $this->file->put($fileAddons, $addonsDefault);
+                // remove placeholder from the controller
+                $template = str_replace('/*ADDONs*/', '', $this->template);
+
+            }
 
         }
 
