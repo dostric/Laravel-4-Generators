@@ -8,6 +8,7 @@ use Illuminate\Support\Pluralizer;
  * Class ControllerGenerator
  * @package Way\Generators\Generators
  *
+ * @property \Illuminate\Filesystem\Filesystem $file
  * @property $template
  */
 class ControllerGenerator extends Generator {
@@ -46,6 +47,19 @@ class ControllerGenerator extends Generator {
 
             $addons = strlen($addons[1]) ? $addons[1] : '';
             $template = str_replace('/*ADDONs*/', $addons, $this->template);
+
+        } else {
+            // add the blank addon file
+            $addonsDefault = '<?php
+
+             class '.$className.'_addons extends '.$className.' {
+
+                /* ADDON */
+                /* ADDON */
+
+             }
+            ';
+            $this->file->put($fileAddons, $addonsDefault);
 
         }
 
