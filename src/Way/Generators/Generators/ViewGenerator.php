@@ -137,11 +137,11 @@ EOT;
             switch($type)
             {
                 case 'integer':
-                    $element = "{{ Form::input('number', '$name', '', array('class' => 'form-control')) }}";
+                    $element = "{{ Form::input('number', '$name', null, array('class' => 'form-control')) }}";
                     break;
 
                 case 'text':
-                    $element = "{{ Form::textarea('$name', '', array('class' => 'form-control')) }}";
+                    $element = "{{ Form::textarea('$name', null, array('class' => 'form-control')) }}";
                     break;
 
                 case 'boolean':
@@ -149,7 +149,7 @@ EOT;
                     break;
 
                 default:
-                    $element = "{{ Form::text('$name', '', array('class' => 'form-control')) }}";
+                    $element = "{{ Form::text('$name', null, array('class' => 'form-control')) }}";
                     break;
             }
 
